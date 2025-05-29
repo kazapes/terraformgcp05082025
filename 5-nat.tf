@@ -20,6 +20,6 @@ resource "google_compute_address" "nat" {
   name         = "nat"
   address_type = "EXTERNAL"
   network_tier = "PREMIUM"
- 
+
 }
 

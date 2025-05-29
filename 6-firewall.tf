@@ -22,40 +22,65 @@ resource "google_compute_firewall" "allow-http" {
   source_ranges = ["0.0.0.0/0"]
 }
 
-resource "google_compute_firewall" "allow-icmp" {
-  name    = "allow-ping"
-  network = google_compute_network.main.name
+# resource "google_compute_firewall" "allow-icmp" {
+#   name    = "allow-ping"
+#   network = google_compute_network.main.name
 
-  allow {
-    protocol = "icmp"
-    # ports    = ["22"] You dont need an icmp port
-  }
+#   allow {
+#     protocol = "icmp"
+#     # ports    = ["22"] You dont need an icmp port
+#   }
 
-  source_ranges = ["0.0.0.0/0"]
-}
+#   source_ranges = ["0.0.0.0/0"]
+# }
 
-resource "google_compute_firewall" "rdp" {
-  name    = "allow-shopping"
-  network = google_compute_network.main.name
+# resource "google_compute_firewall" "rdp" {
+#   name    = "allow-shopping"
+#   network = google_compute_network.main.name
 
-  allow {
-    protocol = "tcp"
-    ports    = ["3389"]
-  }
+#   allow {
+#     protocol = "tcp"
+#     ports    = ["3389"]
+#   }
 
-  source_ranges = ["0.0.0.0/0"]
-}
+#   source_ranges = ["0.0.0.0/0"]
+# }
 
-resource "google_compute_firewall" "data-base" {
-  name    = "data-base"
-  network = google_compute_network.main.name
+# resource "google_compute_firewall" "data-base" {
+#   name    = "data-base"
+#   network = google_compute_network.main.name
 
-  allow {
-    protocol = "tcp"
-    ports    = ["3306" , "1521"]
-  }
+#   allow {
+#     protocol = "tcp"
+#     ports    = ["3306", "1521"]
+#   }
 
-  source_ranges = ["0.0.0.0/0"]
-}
+#   source_ranges = ["0.0.0.0/0"]
+# }
 
 # Make sure you understand the commands you use on the command line
+
+#These are  the firewall rules for the backup VPC
+resource "google_compute_firewall" "allow-ssh-backup" {
+  name    = "allow-ssh-backup"
+  network = google_compute_network.backup.name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_firewall" "allow-http-backup" {
+  name    = "allow-web-backup"
+  network = google_compute_network.backup.name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+}
